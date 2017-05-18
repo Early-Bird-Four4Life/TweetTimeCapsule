@@ -5,34 +5,50 @@
   <title>Tweet Generator</title>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
+  <script>
+    function printTweet(tweet_input, mainDiv, tweetArray) {
+      mainDiv.innerHTML = "";
+      for (var i = tweetArray.length - 1; i > -1; i--) {
+        var tweet_value = document.createElement('h1');
+        tweet_value.innerHTML = tweetArray[i];
+
+        mainDiv.appendChild(tweet_value);
+      }
+    }
+  </script>
 </head>
 
 <body>
-  <div id = "content">
-    <div id = "form">
+  <div id="content">
+    <div id="form">
       Tweet:<br>
-      <input type="text" name="tweet" id = "tweet"><br>
-      Time Delay (in seconds): <br>
-      <input type="text" id = "time"><br>
-      Submit:<br>
-      <input type="submit" name="submit" id = "submit">
+      <input type="text" name="tweet" id="tweet"><br> Time Delay (in seconds): <br>
+      <input type="text" id="time"><br> Submit:
+      <br>
+      <input type="submit" name="submit" id="submit">
     </div>
 
-  <script>
-    $('#submit').click(function(){
-      var tweet_input = document.getElementById('tweet')
-      var mainDiv = document.getElementById('content')
+    <div id = "feed">
 
-      var timeDelay = document.getElementById('time').value * 1000
-      console.log("time delay: " + timeDelay + " ms")
-      window.setTimeout(function(){
-        var tweet_value = document.createElement('h1');
-        tweet_value.innerHTML = tweet_input.value;
+    </div>
 
-        mainDiv.appendChild(tweet_value);
-      }, timeDelay)
-    });
-  </script>
+    <script>
+      var tweetArray = ['00'];
+      $('#submit').click(function() {
+        var tweet_input = document.getElementById('tweet')
+        var mainDiv = document.getElementById('feed')
+        if(tweetArray[0] != "00"){
+          console.log('I am here');
+          tweetArray.push(tweet_input.value)
+        }
+        else{
+          tweetArray[0] = tweet_input.value
+        }
+        var timeDelay = document.getElementById('time').value * 1000
+        console.log("time delay: " + timeDelay + " ms")
+        window.setTimeout(printTweet(tweet_input, mainDiv, tweetArray), timeDelay)
+      });
+    </script>
   </div>
 
 </body>
