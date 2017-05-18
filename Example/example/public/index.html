@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Tweet Generator</title>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script>
+    function sendToServer(tweet, delay) {
+      fetch('http://localhost:3000/tweets/', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "tweet_text": tweet,
+          "number_of_likes": 14,
+          "number_of_retweets": 53,
+          "number_of_replies": 345,
+          "number_of_impressions": 1034,
+          "location": "San Franciso, CA",
+          "date_time": new Date(),
+          "delay": delay
+        })
+      }).then(function(response) {
+        return response.json()
+      }).then(function(json) {
+        console.log('parsed json: ', json)
+      }).catch(function(ex) {
+        console.log('parsing failed: ', ex)
+      });
+    }
+  </script>
+
+</head>
+
+<body>
+  <style>
+    #content {
+      align-content: center;
+    }
+  </style>
+  <div id="content">
+    <div id="form">
+      Tweet:<br>
+      <input type="text" name="tweet" id="tweet"><br> Time Delay (in seconds): <br>
+      <input type="text" id="time"><br> Submit:
+      <br>
+      <input type="submit" name="submit" id="submit">
+    </div>
+
+    <div id="feed">
+
+    </div>
+
+    <script>
+      var tweetArray = ['00']; //global array variable
+
+      $('#submit').click(function() {
+        var tweet_input = document.getElementById('tweet')
+        if (tweet_input.value == "#DELETE") {
+          for(var i = 1; i < tweetArray.length; i++){
+            fetch('http://localhost:3000/tweets/' + i, {
+              method: 'delete'
+            }).then(function(response) {
+              return response.json()
+            }).then(function(json) {
+              console.log('parsed json: ', json)
+            }).catch(function(ex) {
+              console.log('parsing failed: ', ex)
+            });
+          }
+          return;
+        }
+        var mainDiv = document.getElementById('feed')
+        if (tweetArray[0] != "00") {
+          tweetArray.push(tweet_input.value)
+        } else {
+          tweetArray[0] = tweet_input.value
+        }
+        var timeDelay = document.getElementById('time').value * 1000
+        console.log("time delay: " + timeDelay + " ms")
+        window.setTimeout(function() {
+          mainDiv.innerHTML = "";
+          sendToServer(tweetArray[tweetArray.length - 1], timeDelay)
+          // for (var i = tweetArray.length - 1; i > -1; i--) {
+          //   var tweet_value = document.createElement('h1');
+          //   tweet_value.innerHTML = tweetArray[i];
+          //
+          //   mainDiv.appendChild(tweet_value);
+          // }
+        }, timeDelay)
+      });
+    </script>
+  </div>
+
+</body>
+
+</html>
