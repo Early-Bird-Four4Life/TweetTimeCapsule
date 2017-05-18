@@ -5,17 +5,6 @@
   <title>Tweet Generator</title>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
-  <script>
-    function printTweet(tweet_input, mainDiv, tweetArray) {
-      mainDiv.innerHTML = "";
-      for (var i = tweetArray.length - 1; i > -1; i--) {
-        var tweet_value = document.createElement('h1');
-        tweet_value.innerHTML = tweetArray[i];
-
-        mainDiv.appendChild(tweet_value);
-      }
-    }
-  </script>
 </head>
 
 <body>
@@ -46,7 +35,15 @@
         }
         var timeDelay = document.getElementById('time').value * 1000
         console.log("time delay: " + timeDelay + " ms")
-        window.setTimeout(printTweet(tweet_input, mainDiv, tweetArray), timeDelay)
+        window.setTimeout(function(){
+          mainDiv.innerHTML = "";
+          for (var i = tweetArray.length - 1; i > -1; i--) {
+            var tweet_value = document.createElement('h1');
+            tweet_value.innerHTML = tweetArray[i];
+
+            mainDiv.appendChild(tweet_value);
+          }
+        }, timeDelay)
       });
     </script>
   </div>
