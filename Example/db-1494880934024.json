@@ -1,0 +1,11 @@
+{
+  "profiles": [
+    {
+      "id": 1,
+      "firstname": "John",
+      "lastname": "Doe",
+      "favorite_show": "Dear White People",
+      "School": "Winchester University"
+    }
+  ]
+}
