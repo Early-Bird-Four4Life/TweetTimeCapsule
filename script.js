@@ -1,26 +1,31 @@
-// Get the modal
-var modal = document.getElementById('myModal');
+$(document).ready(function() {
 
-// Get the button that opens the modal
-var btn = document.getElementById("global-new-tweet-button");
+    console.log("works");
+    var counter = 140;
+    $('.clock').click(function() {
+        console.log("you");
+        if($('select').prop('disabled') == true){
+            $('select').prop('disabled', false);
+        }else{
+            $('select').prop('disabled', true);
+        }
+    });
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+    $('#submit').mouseenter(function() {
+        console.log("enter");
+        $('#submit').attr('src','twitter_profile_files/button-tp.png');
+    });
+    $('#submit').mouseleave(function() {
+        $(this).attr('src','twitter_profile_files/button-t.png');
+    });
 
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-    console.log("click bruh");
-    modal.style.display = "block";
-}
+    $('#submit').click(function(){
+        console.log("submit");
+    });
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
+    angular.module('ModalModule', [])
+        .controller('ModalController', function($scope) {
+            $scope.myText = 'aaa';
+  });
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
+});
