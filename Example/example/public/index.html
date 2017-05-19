@@ -25,6 +25,7 @@
       }).then(function(response) {
         return response.json()
       }).then(function(json) {
+        window.location.href = "http://localhost:3000/twitter_profile.html"
         console.log('parsed json: ', json)
       }).catch(function(ex) {
         console.log('parsing failed: ', ex)
@@ -43,9 +44,10 @@
   <div id="content">
     <div id="form">
       Tweet:<br>
-      <input type="text" name="tweet" id="tweet"><br> Time Delay (in seconds): <br>
-      <input type="text" id="time"><br> Submit:
-      <br>
+      <input type="text" name="tweet" id="tweet"><br>
+      Time Delay (in seconds): <br>
+      <input type="text" id="time"><br>
+      Submit: <br>
       <input type="submit" name="submit" id="submit">
     </div>
 
@@ -78,18 +80,21 @@
         } else {
           tweetArray[0] = tweet_input.value
         }
-        var timeDelay = document.getElementById('time').value * 1000
+        var timeDelay = document.getElementById('time').value
         console.log("time delay: " + timeDelay + " ms")
-        window.setTimeout(function() {
-          mainDiv.innerHTML = "";
+        //window.setTimeout(function() {
+
           sendToServer(tweetArray[tweetArray.length - 1], timeDelay)
+          //mainDiv.innerHTML = "";
           // for (var i = tweetArray.length - 1; i > -1; i--) {
           //   var tweet_value = document.createElement('h1');
           //   tweet_value.innerHTML = tweetArray[i];
           //
           //   mainDiv.appendChild(tweet_value);
           // }
-        }, timeDelay)
+
+        //}, timeDelay)
+
       });
     </script>
   </div>
