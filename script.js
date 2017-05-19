@@ -51,8 +51,9 @@ $(document).ready(function() {
   });
 
   //clicking submit
-  $('#submit').click(function() {
+  $('#submit').click(function polling() {
     console.log("submit");
+    var timeoutChecker = false;
     if ($('select').prop('disabled') == true) {
       timeDelay = 0;
     }
@@ -69,6 +70,11 @@ $(document).ready(function() {
     console.log("time delay: " + timeDelay + " ms")
 
     sendToServer(tweetArray[tweetArray.length - 1], timeDelay)
+    if(!timeoutChecker){
+      window.setTimeout(polling, timeDelay*1000)
+    } else{
+      timeoutChecker = false
+    }
   });
 
   angular.module('ModalModule', [])
