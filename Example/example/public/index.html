@@ -4,6 +4,12 @@
 <head>
   <title>Tweet Generator</title>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://use.fontawesome.com/af4be4bf35.js"></script>
+  <link type="text/css" rel="stylesheet" href="modalStyle.css" />
+  <script type="text/javascript" src="script.js"></script>
+
   <script>
     function sendToServer(tweet, delay) {
       fetch('http://localhost:3000/tweets/', {
@@ -36,44 +42,20 @@
 </head>
 
 <body>
-  <style>
-    #content {
-      align-content: center;
-    }
-  </style>
   <div id="content">
     <div id="form">
       Tweet:<br>
-      <input type="text" name="tweet" id="tweet"><br>
-      Time Delay (in seconds): <br>
-      <input type="text" id="time"><br>
-      Submit: <br>
+      <input type="text" name="tweet" id="tweet"><br> Time Delay (in seconds): <br>
+      <input type="text" id="time"><br> Submit: <br>
       <input type="submit" name="submit" id="submit">
     </div>
 
-    <div id="feed">
-
-    </div>
 
     <script>
       var tweetArray = ['00']; //global array variable
 
       $('#submit').click(function() {
         var tweet_input = document.getElementById('tweet')
-        if (tweet_input.value == "#DELETE") {
-          for(var i = 1; i < tweetArray.length; i++){
-            fetch('http://localhost:3000/tweets/' + i, {
-              method: 'delete'
-            }).then(function(response) {
-              return response.json()
-            }).then(function(json) {
-              console.log('parsed json: ', json)
-            }).catch(function(ex) {
-              console.log('parsing failed: ', ex)
-            });
-          }
-          return;
-        }
         var mainDiv = document.getElementById('feed')
         if (tweetArray[0] != "00") {
           tweetArray.push(tweet_input.value)
@@ -82,21 +64,45 @@
         }
         var timeDelay = document.getElementById('time').value
         console.log("time delay: " + timeDelay + " ms")
-        //window.setTimeout(function() {
 
-          sendToServer(tweetArray[tweetArray.length - 1], timeDelay)
-          //mainDiv.innerHTML = "";
-          // for (var i = tweetArray.length - 1; i > -1; i--) {
-          //   var tweet_value = document.createElement('h1');
-          //   tweet_value.innerHTML = tweetArray[i];
-          //
-          //   mainDiv.appendChild(tweet_value);
-          // }
-
-        //}, timeDelay)
+        sendToServer(tweetArray[tweetArray.length - 1], timeDelay)
 
       });
     </script>
+  </div>
+  <div class="center modal" ng-app="ModalModule" ng-controller="ModalController">
+      <div class="center top">
+          Compose new Tweet
+      </div>
+      <div class="text-box-div">
+          <form>
+            <!-- Tweet text area -->
+              <textarea id="tweet"ng-model="myText" ng-maxlength="100" placeholder="What's Happening?"></textarea>
+          </form>
+      </div>
+      <div class="buttons">
+          <ul>
+              <li><img src="twitter_profile_files/button-s.png"></li>
+              <li><i class="fa fa-clock-o fa-2x clock" aria-hidden="true"></i></li>
+              <li>
+                  <form action="">
+                    <!-- Time options -->
+                      <select id="time" disabled name="Time" class="select">
+                          <option value="1">1 sec</option>
+                          <option value="3">3 sec</option>
+                          <option value="5">5 sec</option>
+                          <option value="10">10 sec</option>
+                      <!-- </select> -->
+                  </form>
+              </li>
+
+              <!-- Submit img/button -->
+              <li class="right"><img id="submit" src="twitter_profile_files/button-t.png"></li>
+              <li class="right">
+                  <p class="counter">140</p>
+              </li>
+          </ul>
+      </div>
   </div>
 
 </body>
