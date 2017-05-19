@@ -1,0 +1,48 @@
+<!doctype html>
+<html ng-app>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/af4be4bf35.js"></script>
+    <link type="text/css" rel="stylesheet" href="modalStyle.css" />
+    <script type="text/javascript" src="script.js"></script>
+
+</head>
+
+<body>
+    <div class="center modal" ng-app="ModalModule" ng-controller="ModalController">
+        <div class="center top">
+            Compose new Tweet
+        </div>
+        <div class="text-box-div">
+            <form>
+                <textarea id="tweet"ng-model="myText" ng-maxlength="100" placeholder="What's Happening?"></textarea>
+            </form>
+        </div>
+        <div class="buttons">
+            <ul>
+                <li><img src="twitter_profile_files/button-s.png"></li>
+                <li><i class="fa fa-clock-o fa-2x clock" aria-hidden="true"></i></li>
+                <li>
+                    <form action="">
+                        <select id="time" disabled name="Time" class="select">
+                            <option value="1">1 sec</option>
+                            <option value="3">3 sec</option>
+                            <option value="5">5 sec</option>
+                            <option value="10">10 sec</option>
+                        </select>
+                    </form>
+                </li>
+
+                <li class="right"><img id="submit" src="twitter_profile_files/button-t.png"></li>
+                <li class="right">
+                    <p class="counter">140</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>
