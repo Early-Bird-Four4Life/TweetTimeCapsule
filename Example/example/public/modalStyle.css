@@ -9,6 +9,7 @@ body, html {
 
    background-image: url("twitter_profile_files/background.jpeg");
    /*background-color: rgb(61,66,71);*/
+   background-size: cover;
 }
 
 body{
